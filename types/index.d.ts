@@ -23,31 +23,38 @@ export interface PopbillConfig {
 }
 
 /**
- * Popbill SDK 메인 클래스
+ * 팝빌 SDK 메인 모듈
  */
-export interface IPopbillSDK {
-  EasyFinBankService(configs: PopbillConfig): IEasyFinBankService;
-  CashbillService(configs: PopbillConfig): ICashbillService;
+export interface IPopbill {
+  config(config: PopbillConfig): void;
+  EasyFinBankService(): IEasyFinBankService;
+  CashbillService(): ICashbillService;
+  TaxinvoiceService(): any;
+  StatementService(): any;
+  MessageService(): any;
+  KakaoService(): any;
+  FaxService(): any;
+  HTTaxinvoiceService(): any;
+  HTCashbillService(): any;
+  ClosedownService(): any;
+  BizInfoCheckService(): any;
+  AccountCheckService(): any;
+  MgtKeyType: {
+    SELL: string;
+    BUY: string;
+    TRUSTEE: string;
+  };
+  MessageType: {
+    SMS: string;
+    LMS: string;
+    MMS: string;
+  };
+  KakaoType: {
+    ATS: string;
+    FTS: string;
+    FMS: string;
+  };
 }
 
-/**
- * EasyFinBankService 생성자
- */
-export interface EasyFinBankServiceConstructor {
-  new (configs: PopbillConfig): IEasyFinBankService;
-}
-
-/**
- * CashbillService 생성자
- */
-export interface CashbillServiceConstructor {
-  new (configs: PopbillConfig): ICashbillService;
-}
-
-/**
- * 팝빌 서비스 목록
- */
-export interface PopbillServices {
-  EasyFinBankService: EasyFinBankServiceConstructor;
-  CashbillService: CashbillServiceConstructor;
-}
+declare const popbill: IPopbill;
+export default popbill;
