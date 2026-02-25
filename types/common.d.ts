@@ -207,3 +207,147 @@ export interface PopbillException {
   code: number;
   message: string;
 }
+// ========================
+// Callback 타입
+// ========================
+
+export type SuccessCallback<T = any> = (response: T) => void;
+export type ErrorCallback = (error: PopbillException) => void;
+
+// ========================
+// Common Service 인터페이스 (모든 서비스에 포함)
+// ========================
+
+/**
+ * 모든 Popbill 서비스가 포함해야 할 공통 API
+ */
+export interface ICommonService {
+  // ========================
+  // Point 관리 API
+  // ========================
+
+  /**
+   * 포인트 잔액 조회
+   */
+  getBalance(
+    corpNum: string,
+    success: SuccessCallback<number>,
+    error: ErrorCallback,
+  ): void;
+
+  /**
+   * 포인트 결제 이력 조회
+   */
+  getPaymentHistory(
+    corpNum: string,
+    pageNum: number,
+    pageSize: number,
+    success: SuccessCallback<PaymentHistoryResult>,
+    error: ErrorCallback,
+  ): void;
+
+  /**
+   * 포인트 사용 이력 조회
+   */
+  getUseHistory(
+    corpNum: string,
+    pageNum: number,
+    pageSize: number,
+    success: SuccessCallback<UseHistoryResult>,
+    error: ErrorCallback,
+  ): void;
+
+  /**
+   * 환불 신청
+   */
+  requestRefund(
+    corpNum: string,
+    refundForm: RefundForm,
+    success: SuccessCallback<RefundResponse>,
+    error: ErrorCallback,
+  ): void;
+
+  /**
+   * 환불 이력 조회
+   */
+  getRefundHistory(
+    corpNum: string,
+    pageNum: number,
+    pageSize: number,
+    success: SuccessCallback<RefundHistoryResult>,
+    error: ErrorCallback,
+  ): void;
+
+  /**
+   * 정액제 상태 조회
+   */
+  getFlatRateState(
+    corpNum: string,
+    success: SuccessCallback<FlatRateState>,
+    error: ErrorCallback,
+  ): void;
+
+  /**
+   * 과금 정보 조회
+   */
+  getChargeInfo(
+    corpNum: string,
+    success: SuccessCallback<ChargeInfo>,
+    error: ErrorCallback,
+  ): void;
+
+  // ========================
+  // Member 관리 API
+  // ========================
+
+  /**
+   * 회사 정보 조회
+   */
+  getCorpInfo(
+    corpNum: string,
+    success: SuccessCallback<CorpInfo>,
+    error: ErrorCallback,
+  ): void;
+
+  /**
+   * 담당자 정보 목록 조회
+   */
+  getContactInfoList(
+    corpNum: string,
+    success: SuccessCallback<ContactInfo[]>,
+    error: ErrorCallback,
+  ): void;
+
+  /**
+   * 담당자 정보 등록
+   */
+  registContact(
+    corpNum: string,
+    contactInfo: ContactInfo,
+    userID: string,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+
+  /**
+   * 담당자 정보 수정
+   */
+  updateContact(
+    corpNum: string,
+    contactInfo: ContactInfo,
+    userID: string,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+
+  /**
+   * 담당자 정보 삭제
+   */
+  deleteContact(
+    corpNum: string,
+    contactID: string,
+    userID: string,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+}
