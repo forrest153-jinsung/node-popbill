@@ -219,80 +219,206 @@ export type ErrorCallback = (error: PopbillException) => void;
 // ========================
 
 /**
- * 모든 Popbill 서비스가 포함해야 할 공통 API
+ * 모든 Popbill 서비스가 상속하는 BaseService 공통 API
+ * 실제 구현: lib/BaseService.js
  */
 export interface ICommonService {
   // ========================
   // Point 관리 API
   // ========================
 
-  /**
-   * 포인트 잔액 조회
-   */
+  /** 연동회원 잔여포인트 확인 */
   getBalance(
     corpNum: string,
     success: SuccessCallback<number>,
     error: ErrorCallback,
   ): void;
 
-  /**
-   * 포인트 결제 이력 조회
-   */
+  /** 연동회원 포인트 충전 팝업 URL */
+  getChargeURL(
+    corpNum: string,
+    success: SuccessCallback<string>,
+    error: ErrorCallback,
+  ): void;
+  getChargeURL(
+    corpNum: string,
+    userID: string,
+    success: SuccessCallback<string>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 연동회원 무통장 입금신청 */
+  paymentRequest(
+    corpNum: string,
+    paymentForm: PaymentForm,
+    success: SuccessCallback<PaymentResponse>,
+    error: ErrorCallback,
+  ): void;
+  paymentRequest(
+    corpNum: string,
+    paymentForm: PaymentForm,
+    userID: string,
+    success: SuccessCallback<PaymentResponse>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 연동회원 무통장 입금신청 정보확인 */
+  getSettleResult(
+    corpNum: string,
+    settleCode: string,
+    success: SuccessCallback<PaymentHistory>,
+    error: ErrorCallback,
+  ): void;
+  getSettleResult(
+    corpNum: string,
+    settleCode: string,
+    userID: string,
+    success: SuccessCallback<PaymentHistory>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 연동회원 포인트 결제내역 확인 */
   getPaymentHistory(
     corpNum: string,
-    pageNum: number,
-    pageSize: number,
+    sDate: string,
+    eDate: string,
+    page: number,
+    perPage: number,
+    success: SuccessCallback<PaymentHistoryResult>,
+    error: ErrorCallback,
+  ): void;
+  getPaymentHistory(
+    corpNum: string,
+    sDate: string,
+    eDate: string,
+    page: number,
+    perPage: number,
+    userID: string,
     success: SuccessCallback<PaymentHistoryResult>,
     error: ErrorCallback,
   ): void;
 
-  /**
-   * 포인트 사용 이력 조회
-   */
+  /** 연동회원 포인트 결제내역 팝업 URL */
+  getPaymentURL(
+    corpNum: string,
+    success: SuccessCallback<string>,
+    error: ErrorCallback,
+  ): void;
+  getPaymentURL(
+    corpNum: string,
+    userID: string,
+    success: SuccessCallback<string>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 연동회원 포인트 사용내역 확인 */
   getUseHistory(
     corpNum: string,
-    pageNum: number,
-    pageSize: number,
+    sDate: string,
+    eDate: string,
+    page: number,
+    perPage: number,
+    order: string,
+    success: SuccessCallback<UseHistoryResult>,
+    error: ErrorCallback,
+  ): void;
+  getUseHistory(
+    corpNum: string,
+    sDate: string,
+    eDate: string,
+    page: number,
+    perPage: number,
+    order: string,
+    userID: string,
     success: SuccessCallback<UseHistoryResult>,
     error: ErrorCallback,
   ): void;
 
-  /**
-   * 환불 신청
-   */
-  requestRefund(
+  /** 연동회원 포인트 사용내역 팝업 URL */
+  getUseHistoryURL(
+    corpNum: string,
+    success: SuccessCallback<string>,
+    error: ErrorCallback,
+  ): void;
+  getUseHistoryURL(
+    corpNum: string,
+    userID: string,
+    success: SuccessCallback<string>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 연동회원 포인트 환불신청 */
+  refund(
     corpNum: string,
     refundForm: RefundForm,
     success: SuccessCallback<RefundResponse>,
     error: ErrorCallback,
   ): void;
+  refund(
+    corpNum: string,
+    refundForm: RefundForm,
+    userID: string,
+    success: SuccessCallback<RefundResponse>,
+    error: ErrorCallback,
+  ): void;
 
-  /**
-   * 환불 이력 조회
-   */
+  /** 연동회원 포인트 환불내역 확인 */
   getRefundHistory(
     corpNum: string,
-    pageNum: number,
-    pageSize: number,
+    page: number,
+    perPage: number,
+    success: SuccessCallback<RefundHistoryResult>,
+    error: ErrorCallback,
+  ): void;
+  getRefundHistory(
+    corpNum: string,
+    page: number,
+    perPage: number,
+    userID: string,
     success: SuccessCallback<RefundHistoryResult>,
     error: ErrorCallback,
   ): void;
 
-  /**
-   * 정액제 상태 조회
-   */
-  getFlatRateState(
+  /** 환불 신청 상태 조회 */
+  getRefundInfo(
     corpNum: string,
-    success: SuccessCallback<FlatRateState>,
+    refundCode: string,
+    success: SuccessCallback<RefundHistory>,
+    error: ErrorCallback,
+  ): void;
+  getRefundInfo(
+    corpNum: string,
+    refundCode: string,
+    userID: string,
+    success: SuccessCallback<RefundHistory>,
     error: ErrorCallback,
   ): void;
 
-  /**
-   * 과금 정보 조회
-   */
-  getChargeInfo(
+  /** 환불 가능 포인트 조회 */
+  getRefundableBalance(
     corpNum: string,
-    success: SuccessCallback<ChargeInfo>,
+    success: SuccessCallback<number>,
+    error: ErrorCallback,
+  ): void;
+  getRefundableBalance(
+    corpNum: string,
+    userID: string,
+    success: SuccessCallback<number>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 파트너 잔여포인트 확인 */
+  getPartnerBalance(
+    corpNum: string,
+    success: SuccessCallback<number>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 파트너 포인트 충전 팝업 URL */
+  getPartnerURL(
+    corpNum: string,
+    togo: string,
+    success: SuccessCallback<string>,
     error: ErrorCallback,
   ): void;
 
@@ -300,54 +426,147 @@ export interface ICommonService {
   // Member 관리 API
   // ========================
 
-  /**
-   * 회사 정보 조회
-   */
+  /** 연동회원 가입여부 확인 */
+  checkIsMember(
+    corpNum: string,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 연동회원 아이디 중복 확인 */
+  checkID(
+    id: string,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 연동회원 신규가입 */
+  joinMember(
+    joinForm: JoinForm,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 연동회원 탈퇴 */
+  quitMember(
+    corpNum: string,
+    quitReason: string,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+  quitMember(
+    corpNum: string,
+    quitReason: string,
+    userID: string,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 회사정보 확인 */
   getCorpInfo(
     corpNum: string,
     success: SuccessCallback<CorpInfo>,
     error: ErrorCallback,
   ): void;
+  getCorpInfo(
+    corpNum: string,
+    userID: string,
+    success: SuccessCallback<CorpInfo>,
+    error: ErrorCallback,
+  ): void;
 
-  /**
-   * 담당자 정보 목록 조회
-   */
-  getContactInfoList(
+  /** 회사정보 수정 - 주의: BaseService 실제 시그니처는 (CorpNum, UserID, CorpInfo, s, e) */
+  updateCorpInfo(
+    corpNum: string,
+    corpInfo: CorpInfo,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+  updateCorpInfo(
+    corpNum: string,
+    userID: string,
+    corpInfo: CorpInfo,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 담당자 추가 - 주의: BaseService 실제 시그니처는 (CorpNum, UserID, ContactInfo, s, e) */
+  registContact(
+    corpNum: string,
+    contactInfo: ContactInfo,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+  registContact(
+    corpNum: string,
+    userID: string,
+    contactInfo: ContactInfo,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 담당자 정보 확인 */
+  getContactInfo(
+    corpNum: string,
+    contactID: string,
+    success: SuccessCallback<ContactInfo>,
+    error: ErrorCallback,
+  ): void;
+  getContactInfo(
+    corpNum: string,
+    contactID: string,
+    userID: string,
+    success: SuccessCallback<ContactInfo>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 담당자 목록 확인 */
+  listContact(
     corpNum: string,
     success: SuccessCallback<ContactInfo[]>,
     error: ErrorCallback,
   ): void;
-
-  /**
-   * 담당자 정보 등록
-   */
-  registContact(
+  listContact(
     corpNum: string,
-    contactInfo: ContactInfo,
     userID: string,
-    success: SuccessCallback<Response>,
+    success: SuccessCallback<ContactInfo[]>,
     error: ErrorCallback,
   ): void;
 
-  /**
-   * 담당자 정보 수정
-   */
+  /** 담당자 정보 수정 - 주의: BaseService 실제 시그니처는 (CorpNum, UserID, ContactInfo, s, e) */
   updateContact(
     corpNum: string,
     contactInfo: ContactInfo,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+  updateContact(
+    corpNum: string,
+    userID: string,
+    contactInfo: ContactInfo,
+    success: SuccessCallback<Response>,
+    error: ErrorCallback,
+  ): void;
+
+  /** 담당자 삭제 */
+  deleteContact(
+    corpNum: string,
+    targetUserID: string,
     userID: string,
     success: SuccessCallback<Response>,
     error: ErrorCallback,
   ): void;
 
-  /**
-   * 담당자 정보 삭제
-   */
-  deleteContact(
+  /** 팝빌 로그인 팝업 URL */
+  getAccessURL(
     corpNum: string,
-    contactID: string,
+    success: SuccessCallback<string>,
+    error: ErrorCallback,
+  ): void;
+  getAccessURL(
+    corpNum: string,
     userID: string,
-    success: SuccessCallback<Response>,
+    success: SuccessCallback<string>,
     error: ErrorCallback,
   ): void;
 }

@@ -2,21 +2,14 @@
  * EasyFinBank API 타입 정의
  */
 
-// Callback 타입
-export type SuccessCallback<T = any> = (response: T) => void;
-export type ErrorCallback = (error: PopbillException) => void;
-
-// 응답 타입
-export interface Response {
-  code: number;
-  message: string;
-}
-
-// 예외 타입
-export interface PopbillException {
-  code: number;
-  message: string;
-}
+import {
+  Response,
+  ChargeInfo,
+  FlatRateState,
+  SuccessCallback,
+  ErrorCallback,
+  ICommonService,
+} from "./common";
 
 // ========================
 // 계좌 관리 (Manage) 타입
@@ -47,13 +40,17 @@ export interface EasyFinBankAccount {
  * 계좌 등록 정보
  */
 export interface EasyFinBankAccountForm {
-  BankCode?: string;
-  AccountNumber?: string;
-  AccountName?: string;
-  AccountType?: string;
+  BankCode: string;
+  AccountNumber: string;
+  AccountPWD: string;
+  AccountType: string;
+  AccountName: string;
+  IdentityNumber?: string;
+  BankID?: string;
+  FastID?: string;
+  FastPWD?: string;
   UsePeriod?: string;
   Memo?: string;
-  UserID?: string;
 }
 
 /**
@@ -62,7 +59,6 @@ export interface EasyFinBankAccountForm {
 export interface UpdateEasyFinBankAccountForm {
   AccountName?: string;
   Memo?: string;
-  UserID?: string;
 }
 
 // ========================
@@ -130,33 +126,13 @@ export interface EasyFinBankSummary {
   totalAccOut: number;
 }
 
-/**
- * 정액제 상태 정보
- */
-export interface FlatRateState {
-  contractYN: boolean;
-  contractState: number;
-  useEndDate: string;
-  baseDate: number;
-}
-
-/**
- * 요금 정보
- */
-export interface ChargeInfo {
-  code: number;
-  message: string;
-  chargeMethod: string;
-  unitCost: number;
-  chargeDate: string;
-  unitCostName: string;
-}
+// EasyFinBank에서 사용하는 FlatRateState, ChargeInfo는 common.d.ts에서 import
 
 // ========================
 // EasyFinBankService 클래스
 // ========================
 
-export interface IEasyFinBankService {
+export interface IEasyFinBankService extends ICommonService {
   // 계좌 관리
   registBankAccount(
     corpNum: string,
