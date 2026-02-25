@@ -56,5 +56,10 @@ export interface IPopbill {
   };
 }
 
+declare namespace popbill {
+  export interface EasyFinBankService extends IEasyFinBankService {}
+  export interface CashbillService extends ICashbillService {}
+}
+
 declare const popbill: IPopbill;
 export default popbill;
