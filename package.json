@@ -14,12 +14,17 @@
     }
   ],
   "main": "index.js",
+  "types": "types/index.d.ts",
   "engines": {
     "node": ">= 0.10.0"
   },
   "dependencies": {
     "linkhub": "^1.8.2",
     "popbill": "file:"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.33",
+    "typescript": "^5.9.3"
   },
   "repository": {
     "type": "git",
