@@ -108,15 +108,18 @@ export interface EasyFinBankSearchResult {
  */
 export interface EasyFinBankSearchDetail {
   tid: string;
+  trdate: string;
+  trserial: number;
   trdt: string;
-  tram: string;
-  trtype: string;
-  acctname: string;
-  acctnum: string;
-  memo: string;
+  accIn: string;
+  accOut: string;
+  balance: string;
   remark1: string;
   remark2: string;
   remark3: string;
+  remark4: string;
+  regDT: string;
+  memo: string;
 }
 
 /**
