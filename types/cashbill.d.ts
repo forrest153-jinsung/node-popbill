@@ -31,34 +31,32 @@ import {
  */
 export interface Cashbill {
   mgtKey: string;
-  tradeDate?: string;
-  tradeType?: string;
+  tradeType: string;
   tradeUsage: string;
   tradeOpt?: string;
-  taxationType?: string;
+  taxationType: string;
   totalAmount: string;
   supplyCost: string;
   tax: string;
-  serviceFee?: string;
-  franchiseCorpNum?: string;
+  serviceFee: string;
+  franchiseCorpNum: string;
   franchiseTaxRegID?: string;
   franchiseCorpName?: string;
   franchiseCEOName?: string;
   franchiseAddr?: string;
   franchiseTEL?: string;
   identityNum: string;
-  customerName: string;
-  itemName: string;
+  customerName?: string;
+  itemName?: string;
   orderNumber?: string;
   email?: string;
-  hp: string;
+  hp?: string;
   smssendYN?: boolean;
   memo?: string;
-  fax?: string;
+  emailSubject?: string;
   // 취소 현금영수증 필드
   orgConfirmNum?: string;
   orgTradeDate?: string;
-  isPartCancel?: boolean;
   cancelType?: number;
   tradeDT?: string;
 }

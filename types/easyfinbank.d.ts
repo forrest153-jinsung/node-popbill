@@ -44,12 +44,12 @@ export interface EasyFinBankAccountForm {
   AccountNumber: string;
   AccountPWD: string;
   AccountType: string;
-  AccountName: string;
-  IdentityNumber?: string;
+  AccountName?: string;
+  IdentityNumber: string;
   BankID?: string;
   FastID?: string;
   FastPWD?: string;
-  UsePeriod?: string;
+  UsePeriod?: number;
   Memo?: string;
 }
 
@@ -57,7 +57,11 @@ export interface EasyFinBankAccountForm {
  * 계좌 정보 수정 양식
  */
 export interface UpdateEasyFinBankAccountForm {
+  AccountPWD: string;
   AccountName?: string;
+  BankID?: string;
+  FastID?: string;
+  FastPWD?: string;
   Memo?: string;
 }
 

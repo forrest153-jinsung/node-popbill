@@ -162,9 +162,9 @@ export interface JoinForm {
   BizClass: string;
   ContactName: string;
   ContactEmail: string;
-  ContactTEL?: string;
+  ContactTEL: string;
   ID: string;
-  PWD: string;
+  Password: string;
 }
 
 /**
